@@ -1,0 +1,15 @@
+/* Carrusel horizontal para las Cards en Blog.jsx */
+.cards-carousel-container {
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 1rem 0;
+}
+
+.cards-carousel-inner {
+  display: inline-flex;
+  gap: 1rem;
+}
+
+.cards-carousel-item {
+  display: inline-block;
+}

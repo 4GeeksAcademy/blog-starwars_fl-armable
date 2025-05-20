@@ -3,7 +3,7 @@ import Card from "../components/Card";
 
 export const Blog = () => {
     
-    const obj = [
+    const objVehicles = [
         {
             uid: "4",
             name: "Sand Crawler",
@@ -55,36 +55,44 @@ export const Blog = () => {
             url: "https://www.swapi.tech/api/vehicles/24"
         }
     ]
-
     const [vehicles, setVehicles] = useState([]);
     
-    const getVehicle = async (url) => {
+    const getObj = async (url) => {
     const res = await fetch(url);
-    let vehicleData = await res.json();
-    return vehicleData;
+    let objData = await res.json();
+    return objData;
     }
     
 
 
     useEffect(() => {
-        // Función para obtener todos los vehículos y guardar el array de results
-        const fetchAllVehicles = async () => {
+        // Función para obtener todos los objetos y guardar el array de results
+        const fetchAllObjects = async (obj) => {
             const promises = obj.map(async (item) => {
-                const data = await getVehicle(item.url);
+                const data = await getObj(item.url);
                 return data.result;
             });
             const results = await Promise.all(promises);
-            setVehicles(results);
+            return results;
         }
-
-        fetchAllVehicles();
+        fetchAllObjects(objVehicles).then(setVehicles);
     }, []);
 
     return (
-        <>
-            {vehicles.map((vehicle, idx) => (
-                <Card key={vehicle._id || idx} objectShared={vehicle} />
-            ))}
-        </>
+        <div className="cards-carousel-container">
+            <div className="cards-carousel-inner">
+                {vehicles.map((vehicle, idx) => (
+                    <div key={vehicle._id || idx} className="cards-carousel-item">
+                        <Card objectShared={vehicle} />
+                    </div>
+                ))}
+            </div>
+        </div>
     );
 }
+
+{/*const Carrusel = () => {
+    return (
+
+    );
+}*/}
