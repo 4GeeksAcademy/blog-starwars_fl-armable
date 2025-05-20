@@ -1,69 +1,32 @@
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
+import { objVehicles, objPeoples, objPlanets } from "../components/objects";
 
 export const Blog = () => {
     
-    const objVehicles = [
-        {
-            uid: "4",
-            name: "Sand Crawler",
-            url: "https://www.swapi.tech/api/vehicles/4"
-        },
-        {
-            uid: "7",
-            name: "X-34 landspeeder",
-            url: "https://www.swapi.tech/api/vehicles/7"
-        },
-        {
-            uid: "6",
-            name: "T-16 skyhopper",
-            url: "https://www.swapi.tech/api/vehicles/6"
-        },
-        {
-            uid: "8",
-            name: "TIE/LN starfighter",
-            url: "https://www.swapi.tech/api/vehicles/8"
-        },
-        {
-            uid: "14",
-            name: "Snowspeeder",
-            url: "https://www.swapi.tech/api/vehicles/14"
-        },
-        {
-            uid: "18",
-            name: "AT-AT",
-            url: "https://www.swapi.tech/api/vehicles/18"
-        },
-        {
-            uid: "16",
-            name: "TIE bomber",
-            url: "https://www.swapi.tech/api/vehicles/16"
-        },
-        {
-            uid: "19",
-            name: "AT-ST",
-            url: "https://www.swapi.tech/api/vehicles/19"
-        },
-        {
-            uid: "20",
-            name: "Storm IV Twin-Pod cloud car",
-            url: "https://www.swapi.tech/api/vehicles/20"
-        },
-        {
-            uid: "24",
-            name: "Sail barge",
-            url: "https://www.swapi.tech/api/vehicles/24"
-        }
-    ]
     const [vehicles, setVehicles] = useState([]);
-    
+    const [peoples, setPeoples] = useState([]);
+    const [planets, setPlanets] = useState([]);
+
     const getObj = async (url) => {
     const res = await fetch(url);
     let objData = await res.json();
     return objData;
     }
-    
 
+    const Carousel = ({shareObject, icon}) => {
+        return (
+            <div className="cards-carousel-container">
+                <div className="cards-carousel-inner">
+                    {shareObject.map((object, idx) => (
+                        <div key={object._id || idx} className="cards-carousel-item">
+                            <Card objectShared={object} icon={icon} />
+                        </div>
+                    ))}
+                </div>
+            </div>
+        );
+    }
 
     useEffect(() => {
         // Función para obtener todos los objetos y guardar el array de results
@@ -76,23 +39,15 @@ export const Blog = () => {
             return results;
         }
         fetchAllObjects(objVehicles).then(setVehicles);
+        fetchAllObjects(objPeoples).then(setPeoples);
+        fetchAllObjects(objPlanets).then(setPlanets);
     }, []);
-
+    
     return (
-        <div className="cards-carousel-container">
-            <div className="cards-carousel-inner">
-                {vehicles.map((vehicle, idx) => (
-                    <div key={vehicle._id || idx} className="cards-carousel-item">
-                        <Card objectShared={vehicle} />
-                    </div>
-                ))}
-            </div>
-        </div>
+        <>
+        <Carousel shareObject={vehicles} icon={"🚀"} />
+        <Carousel shareObject={peoples} icon={"🤖"} />
+        <Carousel shareObject={planets} icon={"🪐"} />
+        </>
     );
 }
-
-{/*const Carrusel = () => {
-    return (
-
-    );
-}*/}
