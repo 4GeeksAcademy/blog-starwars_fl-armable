@@ -1,26 +1,6 @@
- import { useState, useEffect } from "react";
 
-export function SimpleCard (shareUrl) {
-    const objectShared = {
-        properties: {
-            name: "Luke Skywalker",
-            height: "172",
-            mass: "77",
-            hair_color: "blond",
-            eye_color: "blue",
-            birth_year: "19BBY"
-        },
-        description: "A Jedi Knight and the son of Anakin Skywalker, Luke is a key figure in the Rebel Alliance's fight against the Galactic Empire. He is known for his bravery, skill with a lightsaber, and strong connection to the Force."
-    };
-
-    const [simpleObject, setSimpleObject] = useState(objectShared);
-
-    useEffect(() => {
-        fetch(shareUrl.shareUrl)
-        .then(res => res.json())
-        .then(data => setSimpleObject(data.result))
-        .catch(err => console.error(err))
-    }, []);
+export function SimpleCard ({shareUrl, onButtonClick}) {
+    let simpleObject = shareUrl;
 
     return (
         <div className="card mx-auto w-75 g-0">
@@ -33,7 +13,7 @@ export function SimpleCard (shareUrl) {
                         <p className="card-text mb-0">{simpleObject.description}</p>
                     </div>
                 </div>
-                <div className="d-flex justify-content-between border-top pt-2">
+                <div className="d-flex justify-content-between border-top pt-2 overflow-auto flex-nowrap" style={{maxWidth: '100%'}}>
                     {Object.entries(simpleObject.properties)
                         .filter(([key]) => key !== 'created' && key !== 'edited' && key !== 'name')
                         .map(([key, value]) => (
@@ -43,6 +23,16 @@ export function SimpleCard (shareUrl) {
                             </div>
                         ))}
                 </div>
+                            <button
+                                className="btn btn-learn-more"
+                                style={{ border: 'none', background: 'none', color: '#0d6efd', padding: 0 }}
+                                onMouseEnter={e => e.currentTarget.style.background = '#e7f1ff'}
+                                onMouseLeave={e => e.currentTarget.style.background = 'none'}
+                                onClick={() => onButtonClick()}
+                            >
+                                Go back!
+                            </button>
+
             </div>
         </div>
     );

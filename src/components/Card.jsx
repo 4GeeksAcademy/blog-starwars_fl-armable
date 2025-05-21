@@ -1,4 +1,4 @@
-export default function Card ({objectShared, icon, handleClick}) {
+export default function Card ({objectShared, icon, onButtonClick}) {
 
     const localHandleClick = e => {
         e.currentTarget.classList.toggle('star-filled');
@@ -34,8 +34,7 @@ export default function Card ({objectShared, icon, handleClick}) {
                                 style={{ border: 'none', background: 'none', color: '#0d6efd', padding: 0 }}
                                 onMouseEnter={e => e.currentTarget.style.background = '#e7f1ff'}
                                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
-                                onClick={handleClick}
-                                value={objectShared.properties.url}
+                                onClick={() => onButtonClick(objectShared)}
                             >
                                 Learn more!
                             </button>
@@ -44,7 +43,6 @@ export default function Card ({objectShared, icon, handleClick}) {
                                 style={{ border: 'none', background: 'none', color: '#ffc107', padding: 0 }}
                                 onMouseEnter={e => e.currentTarget.style.background = '#fffbe7'}
                                 onMouseLeave={e => e.currentTarget.style.background = 'none'}
-                                value={objectShared.properties.url}                                
                                 onClick={localHandleClick}
                             >
                                 <span className="star-label">✰</span>
