@@ -7,9 +7,9 @@ export const Home = () => {
 
 	return (
 		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
+			<h1>Hello! This is a blog page that use Hooks, Context y Router of REACT</h1>
 			<p>
-				<img src={rigoImageUrl} />
+				<img src={"https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/500px-Star_Wars_Logo.svg.png"} />
 			</p>
 		</div>
 	);

@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+ import { useState, useEffect } from "react";
 
-export function SimpleCard () {
+export function SimpleCard (shareUrl) {
     const objectShared = {
         properties: {
             name: "Luke Skywalker",
@@ -15,11 +15,12 @@ export function SimpleCard () {
 
     const [simpleObject, setSimpleObject] = useState(objectShared);
 
-    const getObj = async (url) => {
-    const res = await fetch(url);
-    let objData = await res.json();
-    return objData.result;
-    }
+    useEffect(() => {
+        fetch(shareUrl.shareUrl)
+        .then(res => res.json())
+        .then(data => setSimpleObject(data.result))
+        .catch(err => console.error(err))
+    }, []);
 
     return (
         <div className="card mx-auto w-75 g-0">

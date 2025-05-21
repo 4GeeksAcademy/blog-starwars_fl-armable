@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
 import Card from "../components/Card";
 import { objVehicles, objPeoples, objPlanets } from "../components/objects";
+import { SimpleCard } from "./simpleCard";
 
 export const Blog = () => {
     
     const [vehicles, setVehicles] = useState([]);
     const [peoples, setPeoples] = useState([]);
     const [planets, setPlanets] = useState([]);
+    const [isSelectedOne, setIsSelectedOne] = useState(true);
 
-    const getObj = async (url) => {
-    const res = await fetch(url);
-    let objData = await res.json();
-    return objData;
+    let urlToSimpleCard = "https://www.swapi.tech/api/vehicles/4";
+    const handleClick = (url) => {
+        urlToSimpleCard = url;
+        setIsSelectedOne(true);
     }
 
     const Carousel = ({shareObject, icon}) => {
@@ -26,6 +28,12 @@ export const Blog = () => {
                 </div>
             </div>
         );
+    }
+
+    const getObj = async (url) => {
+    const res = await fetch(url);
+    let objData = await res.json();
+    return objData;
     }
 
     useEffect(() => {
@@ -44,10 +52,14 @@ export const Blog = () => {
     }, []);
     
     return (
-        <>
-        <Carousel shareObject={vehicles} icon={"🚀"} />
-        <Carousel shareObject={peoples} icon={"🤖"} />
-        <Carousel shareObject={planets} icon={"🪐"} />
+        <> {
+            isSelectedOne ? <SimpleCard shareUrl={urlToSimpleCard}/>
+            : ( <>
+        <Carousel shareObject={vehicles} icon={"🚀"} onButtonClick={(event) => handleClick(event.target.value)} />
+        <Carousel shareObject={peoples} icon={"🤖"} onButtonClick={(event) => handleClick(event.target.value)} />
+        <Carousel shareObject={planets} icon={"🪐"} onButtonClick={(event) => handleClick(event.target.value)} />
+        </> )
+        }
         </>
     );
 }
